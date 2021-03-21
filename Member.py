@@ -27,5 +27,11 @@ class Member:
         # Generate a random uuid number in a 128 bit representation
         self.dob = date(int(dob[0]), int(dob[1]), int(dob[2]))
         self.rented_books = []
-        
 
+    def __str__(self) -> str:
+        return "Name: {0}, ID: {1}, Date of Birth: {2}, Current Books Rented:" \
+               "{3}".format(self.name, self.member_id, self.dob,
+                            len(self.rented_books))
+
+    def __eq__(self, other: Member) -> bool:
+        return self.member_id == other.member_id
