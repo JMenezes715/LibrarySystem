@@ -82,3 +82,6 @@ class Member:
 
             self.rented_books.remove(book)
             # Remove the book from the user's rented books
+
+            return True
+        return False
