@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List
 from Book import Book
-from datetime import date
+from datetime import date, timedelta
 from uuid import uuid4
 
 
@@ -35,3 +35,50 @@ class Member:
 
     def __eq__(self, other: Member) -> bool:
         return self.member_id == other.member_id
+
+    def rent_book(self, book: Book) -> bool:
+        """ Rents this book
+
+        :param book: The book to be rented
+        :return: True iff the book was successfully rented. False otherwise
+        """
+
+        if not book.is_rented and book not in self.rented_books:
+            book.due_date = date.today() + timedelta(days=7)
+            book.is_rented = True
+            book.rent_list.enqueue(self)
+            # Add the member to the front of the queue to signify that they
+            # are renting the book
+
+            self.rented_books.append(book)
+
+            return True
+        return False
+
+    def renew_book(self, book) -> bool:
+        """ Renews this book for one week
+
+        :param book: The book to be renewed
+        :return: True iff the book was successfully renewed. False otherwise
+        """
+
+        if book in self.rented_books:
+            book.due_date = date.today() + timedelta(days=7)
+            return True
+
+        return False
+
+    def return_book(self, book) -> bool:
+        """ Returns this book to the library
+
+        :param book: The book to be returned
+        :return: True iff the book was successfully returned. False otherwise
+        """
+
+        if book in self.rented_books:
+            book.is_rented = False
+            book.rent_list.dequeue()
+            # Remove them from the renting list
+
+            self.rented_books.remove(book)
+            # Remove the book from the user's rented books

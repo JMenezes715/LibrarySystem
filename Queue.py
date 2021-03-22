@@ -6,6 +6,8 @@ class Queue:
 
     === Attributes ===
     items: a list of items in the queue
+
+    *Note that the person at the front of the queue currently holds the book*
     """
     def __init__(self) -> None:
         """Initialize a new empty queue."""

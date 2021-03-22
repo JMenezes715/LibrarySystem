@@ -1,7 +1,8 @@
 from __future__ import annotations
 from typing import List
-from datetime import date
+from datetime import date, timedelta
 from Queue import Queue
+from Member import Member
 
 
 class Book:
@@ -12,12 +13,22 @@ class Book:
     author: the author(s) of this book
     publication date: the publication date of this book
     wait_list: a queue of members waiting to rent the book
+    due_date: the date that this book must be returned
+    is_rented: the status of the book regarding renting it
+
+    * Note that the member at the front of the queue represents the user who is
+    currently holding the book *
+
+    === Representation Invariants ===
+    is_rented = False => Book.rent_list.is_empty() = True
     """
 
     name: str
     author: str
     publication_date: date
-    wait_list: Queue
+    rent_list: Queue
+    due_date: date
+    is_rented: bool
 
     def __init__(self, name: str, author: str, publication_date: List[int]):
         """ Creates a new Book object
@@ -33,7 +44,9 @@ class Book:
                                      int(publication_date[1]),
                                      int(publication_date[2]))
 
-        self.wait_list = Queue()
+        self.rent_list = Queue()
+        self.due_date = date.today()
+        self.is_rented = False
 
     def __str__(self):
         return "{0}, by {1}".format(self.name, self.author)
@@ -45,4 +58,4 @@ class Book:
         """ Returns true iff this book is available to rent. False otherwise
         """
 
-        return self.wait_list.is_empty()
+        return self.rent_list.is_empty()
