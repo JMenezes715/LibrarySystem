@@ -35,6 +35,9 @@ class Book:
 
         self.wait_list = Queue()
 
+    def __str__(self):
+        return "{0}, by {1}".format(self.name, self.author)
+
     def __eq__(self, other: Book):
         return self.name == other.name and self.author == other.author
 
