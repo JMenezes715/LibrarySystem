@@ -34,3 +34,12 @@ class Book:
                                      int(publication_date[2]))
 
         self.wait_list = Queue()
+
+    def __eq__(self, other: Book):
+        return self.name == other.name and self.author == other.author
+
+    def is_available(self) -> bool:
+        """ Returns true iff this book is available to rent. False otherwise
+        """
+
+        return self.wait_list.is_empty()
