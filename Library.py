@@ -11,36 +11,51 @@ class Library:
     name: the name of this library
     location: the location of this library
     members: the members of this library
-    catalog: a list of all the books that this library owns
-    available_books: a list of books that are available to rent
+    book_list: a list of all the books that this library owns
 
     """
     name: str
     location: str
-
     members: List[Member]
-    catalog: List[Book]
-    available_books: List[Book]
+    book_list: List[Book]
 
     def __init__(self, name: str, location: str) -> None:
         self.name = name
         self.location = location
         self.members = []
-        self.books = []
+        self.book_list = []
 
     def add_book(self, book: Book) -> bool:
-        """ Returns true if this book was successfully added to the library's
-        catalog. False otherwise
+        """ Adds book to the library's book list
 
         :param book: The book to be added to the library
+        :return: True if this book was successfully added to the library's
+        book list. False otherwise
         """
 
-        if book not in self.available_books:
-            self.available_books.append(book)
+        if book not in self.book_list:
+            self.book_list.append(book)
             return True
 
-        print("The book is already in the catalog!")
+        print("This book is already in the library's book list!")
         return False
+
+    def remove_book(self, book: Book) -> bool:
+        """ Removes book from the library's book list
+
+        :param book: The book to be removed from the library
+        :return: True if the book was successfully removed from the library's
+        book list. False otherwise
+        """
+
+        try:
+            self.book_list.remove(book)
+
+        except ValueError:
+            print("Book not found. Try again.")
+            return False
+
+        return True
 
     def add_member(self, member: Member) -> None:
         """ Adds a new member to the library's list of members

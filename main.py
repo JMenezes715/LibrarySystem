@@ -10,7 +10,16 @@ if __name__ == '__main__':
     The_Hunger_Games = Book("The Hunger Games", "Suzanne Collins",
                             [2008, 9, 14])
 
-    Central_Library.
+    The_Lightning_Thief = Book("The Lightning Thief", "Rick Riordan",
+                               [2005, 6, 28])
 
-    user_name = input("Enter a username")
-    password = ("Enter a password")
+    print(The_Hunger_Games)
+    print(The_Lightning_Thief)
+
+    Central_Library.add_book(The_Hunger_Games)
+    Central_Library.add_book(The_Lightning_Thief)
+
+    user_name = input("Enter a username: ")
+    password = input("Enter a password: ")
+
+    test_member =
