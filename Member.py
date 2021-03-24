@@ -2,39 +2,42 @@ from __future__ import annotations
 from typing import List
 from Book import Book
 from datetime import date, timedelta
-from uuid import uuid4
-
 
 class Member:
     """ A member that belongs to a library
 
     === Attributes ===
     name: the name of this member
-    member_id: the 7 digit id of this member
     dob: the date of birth of this member
     rented_books: a list of books that this member is currently renting
-
+    late_fees: the amount of money that the user owes the library
+    username: the member's username for logging into the system
+    password: the member's password for logging into the system
 
     """
     name: str
-    member_id: int
     dob: date
     rented_books: List[Book]
+    late_fees: float
 
-    def __init__(self, name, dob: List[str]):
+    username: str
+    password: str
+
+    def __init__(self, name, dob: List[str], username: str, password: str):
         self.name = name
-        self.member_id = uuid4().int
-        # Generate a random uuid number in a 128 bit representation
         self.dob = date(int(dob[0]), int(dob[1]), int(dob[2]))
         self.rented_books = []
+        self.late_fees = 0
+
+        self.username = username
+        self.password = password
 
     def __str__(self) -> str:
-        return "Name: {0}, ID: {1}, Date of Birth: {2}, Current Books Rented:" \
-               "{3}".format(self.name, self.member_id, self.dob,
-                            len(self.rented_books))
+        return "Name: {0}, Date of Birth: {1}, Current Books Rented:" \
+               "{2}".format(self.name, self.dob, len(self.rented_books))
 
     def __eq__(self, other: Member) -> bool:
-        return self.member_id == other.member_id
+        return self.username == other.username
 
     def rent_book(self, book: Book) -> bool:
         """ Rents this book
@@ -53,6 +56,14 @@ class Member:
             self.rented_books.append(book)
 
             return True
+
+        elif book.is_rented:
+            print("The book is currently being rented and you will be placed on"
+                  "the wait list.")
+
+            book.rent_list.enqueue(self)
+            return True
+
         return False
 
     def renew_book(self, book) -> bool:
