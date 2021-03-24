@@ -1,9 +1,7 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List, Optional, Any
 from datetime import date, timedelta
 from Queue import Queue
-from Library import Library
-from Member import Member
 
 
 class Book:
@@ -31,7 +29,7 @@ class Book:
     rent_list: Queue
     due_date: date
     is_rented: bool
-    owned_by: Optional[Library]
+    owned_by: Any
 
     def __init__(self, name: str, author: str, publication_date: List[int]):
         """ Creates a new Book object
@@ -54,6 +52,9 @@ class Book:
 
     def __str__(self):
         return "{0}, by {1}".format(self.name, self.author)
+
+    def __repr__(self):
+        return "({0})".format(str(self))
 
     def __eq__(self, other: Book):
         return self.name == other.name and self.author == other.author

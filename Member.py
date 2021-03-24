@@ -1,8 +1,7 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Any
 from Book import Book
 from datetime import date, timedelta
-from Library import Library
 
 
 class Member:
@@ -26,7 +25,7 @@ class Member:
     username: str
     password: str
 
-    libraries: List[Library]
+    libraries: List[Any]
 
     def __init__(self, name, dob: List[str], username: str, password: str):
         self.name = name
@@ -37,9 +36,14 @@ class Member:
         self.username = username
         self.password = password
 
+        self.libraries = []
+
     def __str__(self) -> str:
-        return "Name: {0}, Date of Birth: {1}, Current Books Rented:" \
+        return "Name: {0}, Date of Birth: {1}, Current Books Rented: " \
                "{2}".format(self.name, self.dob, len(self.rented_books))
+
+    def __repr__(self):
+        return str(self)
 
     def __eq__(self, other: Member) -> bool:
         return self.username == other.username
