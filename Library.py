@@ -35,6 +35,7 @@ class Library:
 
         if book not in self.book_list:
             self.book_list.append(book)
+            book.owned_by = self
             return True
 
         print("This book is already in the library's book list!")

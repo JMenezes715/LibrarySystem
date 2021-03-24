@@ -19,7 +19,16 @@ if __name__ == '__main__':
     Central_Library.add_book(The_Hunger_Games)
     Central_Library.add_book(The_Lightning_Thief)
 
+    name = input("Enter your full name: ")
+    dob_year = "Enter the year you were born: "
+    dob_month = "Enter the month you were born: "
+    dob_day = "Enter the day you were born: "
     user_name = input("Enter a username: ")
     password = input("Enter a password: ")
 
-    test_member =
+    test_member = Member(name, [dob_year, dob_month, dob_day], user_name,
+                         password)
+
+    print(test_member)
+
+    Central_Library.add_member(test_member)

@@ -1,7 +1,8 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 from datetime import date, timedelta
 from Queue import Queue
+from Library import Library
 from Member import Member
 
 
@@ -15,6 +16,7 @@ class Book:
     wait_list: a queue of members waiting to rent the book
     due_date: the date that this book must be returned
     is_rented: the status of the book regarding renting it
+    owned_by: the library that owns the book
 
     * Note that the member at the front of the queue represents the user who is
     currently holding the book *
@@ -29,6 +31,7 @@ class Book:
     rent_list: Queue
     due_date: date
     is_rented: bool
+    owned_by: Optional[Library]
 
     def __init__(self, name: str, author: str, publication_date: List[int]):
         """ Creates a new Book object
@@ -47,6 +50,7 @@ class Book:
         self.rent_list = Queue()
         self.due_date = date.today()
         self.is_rented = False
+        self.owned_by = None # Book is initially owned by nobody
 
     def __str__(self):
         return "{0}, by {1}".format(self.name, self.author)
