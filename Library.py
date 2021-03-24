@@ -28,6 +28,20 @@ class Library:
         self.members = []
         self.books = []
 
+    def add_book(self, book: Book) -> bool:
+        """ Returns true if this book was successfully added to the library's
+        catalog. False otherwise
+
+        :param book: The book to be added to the library
+        """
+
+        if book not in self.available_books:
+            self.available_books.append(book)
+            return True
+
+        print("The book is already in the catalog!")
+        return False
+
     def add_member(self, member: Member) -> None:
         """ Adds a new member to the library's list of members
 
@@ -43,5 +57,11 @@ class Library:
         :return: True iff the member was removed. False otherwise.
         """
 
-        for person in self.members:
-            pass
+        try:
+            self.members.remove(member)
+
+        except ValueError:
+            print("Member does not exist. Please try again.")
+            return False
+
+        return True
