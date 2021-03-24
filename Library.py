@@ -51,6 +51,7 @@ class Library:
 
         try:
             self.book_list.remove(book)
+            book.owned_by = None
 
         except ValueError:
             print("Book not found. Try again.")
@@ -65,6 +66,7 @@ class Library:
         """
         if member not in self.members:
             self.members.append(member)
+            member.libraries.append(self)
 
     def remove_member(self, member: Member) -> bool:
         """Removes this member from the library's member list.
@@ -75,6 +77,7 @@ class Library:
 
         try:
             self.members.remove(member)
+            member.libraries.remove(self)
 
         except ValueError:
             print("Member does not exist. Please try again.")

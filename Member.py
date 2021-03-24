@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List
 from Book import Book
 from datetime import date, timedelta
+from Library import Library
 
 
 class Member:
@@ -14,6 +15,7 @@ class Member:
     late_fees: the amount of money that the user owes the library
     username: the member's username for logging into the system
     password: the member's password for logging into the system
+    libraries: the libraries that this member belongs to
 
     """
     name: str
@@ -23,6 +25,8 @@ class Member:
 
     username: str
     password: str
+
+    libraries: List[Library]
 
     def __init__(self, name, dob: List[str], username: str, password: str):
         self.name = name
@@ -47,7 +51,9 @@ class Member:
         :return: True iff the book was successfully rented. False otherwise
         """
 
-        if not book.is_rented and book not in self.rented_books:
+        if not book.is_rented and book not in self.rented_books and \
+                book.owned_by in self.libraries:
+
             book.due_date = date.today() + timedelta(days=7)
             book.is_rented = True
             book.rent_list.enqueue(self)
